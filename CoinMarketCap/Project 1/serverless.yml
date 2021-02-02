@@ -1,0 +1,18 @@
+service: coicapmarket-project1
+
+provider: 
+  name: aws
+  runtime: python3.8
+  region: sa-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action: 
+        - ssm:GetParameter
+      Resource:
+        - Fn::Join:
+          - ""
+          - - "arn:aws:ssm"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS:AccountId
+            - ":parameter/coimarketcapAPI"
