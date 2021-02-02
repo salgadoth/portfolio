@@ -1,7 +1,12 @@
+import boto3
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects 
 import json
 from app.functions import *
+
+ssm_client = boto3.client('ssm', region_name='sa-east-1')
+response = ssm_client.get_parameter(Name='coinmarketcapAPI', WithDecryption=True)
+coinmarketcapAPI = response["Parameter"]["Value"]
 
 #constants
 CURRENCY = 'USD'
@@ -18,7 +23,7 @@ parameters = {
 
 headers = {
 	'Accepts' : 'aplication/json',
-	'X-CMC_PRO_API_KEY' : 'c13d9246-2806-4fc0-b8a2-3db224745082',
+	'X-CMC_PRO_API_KEY' : coinmarketcapAPI,
 }
 
 session = Session()
